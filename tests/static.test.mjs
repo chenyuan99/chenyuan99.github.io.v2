@@ -109,9 +109,10 @@ test("contact destinations and structured identity remain verified and synchroni
     "https://github.com/chenyuan99",
     "https://www.linkedin.com/in/yuancc/",
     "https://yuanchentech.medium.com/",
+    "https://scholar.google.com/citations?user=aJNZ1EYAAAAJ&hl=en",
   ];
   const contact = html.slice(html.indexOf('id="contact"'), html.indexOf("</section>", html.indexOf('id="contact"')));
-  for (const url of verifiedUrls) assert.ok(contact.includes('href="'+url+'"'), url);
+  for (const url of verifiedUrls) assert.ok(contact.includes('href="'+url.replace(/&/g, "&amp;")+'"') || contact.includes('href="'+url+'"'), url);
   assert.ok(!html.includes("PS_CX0AAAAAJ"), "AcademicPages template Scholar ID must never be published");
   const structured = JSON.parse(html.match(/<script[^>]+type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/)[1]);
   assert.deepEqual(structured.sameAs, verifiedUrls);

@@ -24,6 +24,10 @@ export const resume = {
     {
       "label": "Medium",
       "url": "https://yuanchentech.medium.com/"
+    },
+    {
+      "label": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=aJNZ1EYAAAAJ&hl=en"
     }
   ],
   "experience": [

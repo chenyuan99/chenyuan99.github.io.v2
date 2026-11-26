@@ -1,0 +1,50 @@
+---
+import { resume } from "@/data/resume";
+import { featuredProjects } from "@/data/showcases";
+import { Badge } from "@/components/ui/badge";
+import { ArrowUpRight } from "lucide-react";
+---
+<section id="projects" class="section-block" aria-labelledby="projects-heading">
+  <div class="mb-6 flex flex-wrap items-baseline justify-between gap-3">
+    <div class="section-heading section-heading--inline"><span class="section-index">04 /</span><h2 id="projects-heading">Selected projects</h2></div>
+    <a class="inline-flex min-h-10 items-center gap-1 text-sm font-medium text-primary hover:underline" href={resume.socials[0].url}>All repositories <ArrowUpRight className="size-4" aria-hidden="true" /></a>
+  </div>
+  <p class="mb-7 max-w-2xl text-muted-foreground">Three featured projects across consumer software, document intelligence, and developer tooling.</p>
+  <div class="featured-projects">
+    {featuredProjects.map((item, i) => <article class="featured-project" data-featured-project={item.name}>
+      <figure class:list={["project-visual", item.image.kind === "product" ? "project-visual--product" : "project-visual--architecture"]}>
+        <div class="project-image-frame">
+          <img src={item.image.src} alt={item.image.alt} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
+        </div>
+        <figcaption>{item.image.caption}</figcaption>
+      </figure>
+      <div class="project-details">
+        <p class="eyebrow mb-2">Featured / 0{i + 1}</p>
+        <h3 class="project-title">{item.name}</h3>
+        <p class="mt-2 text-base text-muted-foreground">{item.project.description}</p>
+        <dl class="project-narrative">
+          <div><dt>Problem</dt><dd>{item.problem}</dd></div>
+          <div><dt>Approach</dt><dd>{item.approach}</dd></div>
+          <div><dt>Outcome</dt><dd>{item.outcome}</dd></div>
+        </dl>
+        <ul class="mt-5 flex flex-wrap gap-1.5" aria-label={`${item.name} technologies`}>
+          {item.technologies.map(technology => <li><Badge>{technology}</Badge></li>)}
+        </ul>
+        <a class="project-link" href={item.project.url}>{item.linkLabel}<ArrowUpRight className="size-4" aria-hidden="true" /></a>
+      </div>
+    </article>)}
+  </div>
+  <div class="project-archive" aria-labelledby="archive-heading">
+    <h3 id="archive-heading" class="text-lg font-semibold tracking-tight">Project archive</h3>
+    <p class="mt-1 text-sm text-muted-foreground">All projects, including the featured work above.</p>
+    <ul class="mt-5 divide-y divide-border" data-project-archive>
+      {resume.projects.map(project => <li class="archive-row" data-archive-project={project.name}>
+        <div class="min-w-0">
+          <h4 class="font-medium"><a class="inline-flex min-h-10 items-center gap-1.5 hover:text-primary hover:underline" href={project.url}>{project.name}<ArrowUpRight className="size-3.5 shrink-0 text-primary" aria-hidden="true" /></a></h4>
+          <p class="text-sm text-muted-foreground">{project.description}</p>
+        </div>
+        <p class="text-xs text-muted-foreground archive-tags">{project.tags.join(" · ")}</p>
+      </li>)}
+    </ul>
+  </div>
+</section>

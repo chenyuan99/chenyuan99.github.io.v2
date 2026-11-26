@@ -26,8 +26,18 @@ Before switching yuanchen.io to v2, preserve legacy destinations, particularly t
 
 ## Content migration
 
-Migrated the real education, professional experience, and all eight portfolio entries from [v1](https://github.com/chenyuan99/chenyuan99.github.io), with verified public profile links and research records. AcademicPages sample publications, sample skills, and old personal address/phone are intentionally excluded. The resume PDF is generated at build time at `/resume.pdf`. Use the email button for a mailto link, or LinkedIn as an alternative. Email obfuscation discourages basic HTML scrapers but is not a guarantee against automated harvesting.
+Migrated the real education, professional experience, and the portfolio entries from [v1](https://github.com/chenyuan99/chenyuan99.github.io), with verified public profile links and research records. AcademicPages sample publications, sample skills, and old personal address/phone are intentionally excluded. The resume PDF is generated at build time at `/resume.pdf`. Use the email button for a mailto link, or LinkedIn as an alternative. Email obfuscation discourages basic HTML scrapers but is not a guarantee against automated harvesting.
 
 ## Quality checks
 
 GitHub Actions checks types, builds the site, and tests the static output (PDF, metadata, sitemap and content).
+
+## Featured project sources
+
+The curated showcase narratives derive from public, project-owned material. No adoption or performance claims are inferred.
+
+- [StageLight product site](https://yuanchen.io/StageLight/) and its [published English page](https://github.com/chenyuan99/chenyuan99.github.io/blob/master/StageLight/en.html). The memory-card image is derived from the site's real [product artwork](https://github.com/chenyuan99/chenyuan99.github.io/blob/master/StageLight/memory-card-share.jpg), resized and compressed for the portfolio.
+- [TaxFront source and architecture](https://github.com/chenyuan99/TaxFront#current-architecture). The SVG is an original simplified architectural illustration, not a screenshot.
+- [BenchmarkLLM source](https://github.com/chenyuan99/benchmarkLLM/blob/main/lmstudio_benchmark/lmstudio_benchmark/main.py). The SVG is an original measurement-pipeline illustration, not reported benchmark results.
+
+All project cards remain represented in the archive. See `AGENTS.md` for repository guidance.

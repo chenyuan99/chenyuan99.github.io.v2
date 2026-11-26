@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="440" viewBox="0 0 720 440" role="img" aria-labelledby="title desc">
+  <title id="title">BenchmarkLLM measurement pipeline</title><desc id="desc">Repeated prompts, local LM Studio API calls and measurement aggregation into CSV.</desc>
+  <rect width="720" height="440" rx="20" fill="#1d2440"/>
+  <g font-family="system-ui, sans-serif">
+    <text x="30" y="41" fill="#bfcfff" font-size="14" font-weight="700" letter-spacing="2">ENGINEERING / SYSTEM FLOW</text>
+    <path d="M30 58H690" stroke="#536080" />
+    <rect x="30" y="92" width="210" height="225" rx="12" fill="#2d3654" stroke="#536080"/>
+    <text x="48" y="123" fill="#bfcfff" font-size="13" font-weight="700">01</text>
+    <text x="48" y="160" fill="#f5f7ff" font-size="21" font-weight="700">Python CLI</text>
+    <text x="48" y="195" fill="#d5def7" font-size="16">Prompt lengths</text>
+    <text x="48" y="223" fill="#d5def7" font-size="16">Repeated trials</text>
+    <path d="M240 204h15m-5-5 5 5-5 5" stroke="#bfcfff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="255" y="92" width="210" height="225" rx="12" fill="#2d3654" stroke="#536080"/>
+    <text x="273" y="123" fill="#bfcfff" font-size="13" font-weight="700">02</text>
+    <text x="273" y="160" fill="#f5f7ff" font-size="21" font-weight="700">LM Studio</text>
+    <text x="273" y="195" fill="#d5def7" font-size="16">Local HTTP API</text>
+    <text x="273" y="223" fill="#d5def7" font-size="16">Chat completions</text>
+    <path d="M465 204h15m-5-5 5 5-5 5" stroke="#bfcfff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="480" y="92" width="210" height="225" rx="12" fill="#2d3654" stroke="#536080"/>
+    <text x="498" y="123" fill="#bfcfff" font-size="13" font-weight="700">03</text>
+    <text x="498" y="160" fill="#f5f7ff" font-size="21" font-weight="700">Measurements</text>
+    <text x="498" y="195" fill="#d5def7" font-size="16">Latency</text>
+    <text x="498" y="223" fill="#d5def7" font-size="16">Token throughput</text>
+    <text x="498" y="251" fill="#d5def7" font-size="16">Process memory</text>
+    
+    <rect x="30" y="346" width="660" height="64" rx="10" fill="#2d3654"/>
+    <text x="48" y="371" fill="#bfcfff" font-size="12" font-weight="700" letter-spacing="1.4">OUTPUT</text>
+    <text x="48" y="394" fill="#f5f7ff" font-size="17" font-weight="600">CSV export + summary statistics</text>
+  </g>
+</svg>

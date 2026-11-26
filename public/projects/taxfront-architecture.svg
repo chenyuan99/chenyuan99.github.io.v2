@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="440" viewBox="0 0 720 440" role="img" aria-labelledby="title desc">
+  <title id="title">TaxFront document intelligence</title><desc id="desc">React intake, Firebase storage and Firestore, Cloud Functions and AI extraction and reporting.</desc>
+  <rect width="720" height="440" rx="20" fill="#142d2b"/>
+  <g font-family="system-ui, sans-serif">
+    <text x="30" y="41" fill="#98e6cc" font-size="14" font-weight="700" letter-spacing="2">ENGINEERING / SYSTEM FLOW</text>
+    <path d="M30 58H690" stroke="#476763" />
+    <rect x="30" y="92" width="210" height="225" rx="12" fill="#24423f" stroke="#476763"/>
+    <text x="48" y="123" fill="#98e6cc" font-size="13" font-weight="700">01</text>
+    <text x="48" y="160" fill="#f3faf8" font-size="21" font-weight="700">React intake</text>
+    <text x="48" y="195" fill="#d0e6df" font-size="16">Document upload</text>
+    <text x="48" y="223" fill="#d0e6df" font-size="16">PDFs and images</text>
+    <path d="M240 204h15m-5-5 5 5-5 5" stroke="#98e6cc" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="255" y="92" width="210" height="225" rx="12" fill="#24423f" stroke="#476763"/>
+    <text x="273" y="123" fill="#98e6cc" font-size="13" font-weight="700">02</text>
+    <text x="273" y="160" fill="#f3faf8" font-size="21" font-weight="700">Firebase</text>
+    <text x="273" y="195" fill="#d0e6df" font-size="16">Cloud Storage</text>
+    <text x="273" y="223" fill="#d0e6df" font-size="16">Firestore metadata</text>
+    <path d="M465 204h15m-5-5 5 5-5 5" stroke="#98e6cc" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="480" y="92" width="210" height="225" rx="12" fill="#24423f" stroke="#476763"/>
+    <text x="498" y="123" fill="#98e6cc" font-size="13" font-weight="700">03</text>
+    <text x="498" y="160" fill="#f3faf8" font-size="21" font-weight="700">Cloud Functions</text>
+    <text x="498" y="195" fill="#d0e6df" font-size="16">Genkit + Gemini</text>
+    <text x="498" y="223" fill="#d0e6df" font-size="16">Extraction and</text>
+    <text x="498" y="251" fill="#d0e6df" font-size="16">report workflows</text>
+    
+    <rect x="30" y="346" width="660" height="64" rx="10" fill="#24423f"/>
+    <text x="48" y="371" fill="#98e6cc" font-size="12" font-weight="700" letter-spacing="1.4">OUTPUT</text>
+    <text x="48" y="394" fill="#f3faf8" font-size="17" font-weight="600">Structured fields → preparation and consistency reports</text>
+  </g>
+</svg>

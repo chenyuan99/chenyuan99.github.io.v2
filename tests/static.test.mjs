@@ -127,3 +127,22 @@ test("contact destinations and structured identity remain verified and synchroni
   assert.ok(!html.includes("chenyuancareer@gmail.com"), "email must remain obfuscated in static HTML");
   assert.ok(html.includes("linkedin.com/in/yuancc · github.com/chenyuan99") || html.includes("linkedin.com/in/yuancc &#183; github.com/chenyuan99"), "print contact text uses the same verified profile paths");
 });
+
+test("contact row uses accessible inline SVG platform logos", () => {
+  const start = html.indexOf('id="contact"');
+  const contact = html.slice(start, html.indexOf("</section>", start));
+  assert.ok(contact.includes('class="contact-icons"'));
+  assert.ok(contact.includes('role="group"'));
+  assert.ok(contact.includes('aria-label="Contact and social profiles"'));
+  for (const label of ["GitHub", "LinkedIn", "Medium", "Google Scholar", "Email"]) {
+    assert.ok(contact.includes('data-contact-icon="'+label+'"'), label);
+    assert.ok(contact.includes('aria-label="'+ (label === "Email" ? "Email me" : label) +'"'), label);
+  }
+  const icons = [...contact.matchAll(/<svg\b[^>]*data-contact-icon="[^"]+"[^>]*>/g)].map(match=>match[0]);
+  assert.equal(icons.length, 5);
+  for (const icon of icons) {
+    assert.ok(icon.includes('aria-hidden="true"'));
+    assert.ok(icon.includes('focusable="false"'));
+  }
+  assert.ok(!contact.includes("ArrowUpRight"), "contact controls use brand marks rather than generic arrows");
+});

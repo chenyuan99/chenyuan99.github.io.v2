@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import ProjectShowcase from "@/components/ProjectShowcase.astro";
 import EngineeringNotes from "@/components/EngineeringNotes.astro";
+import ContactIcon from "@/components/ContactIcon.astro";
 import { ArrowUpRight, Download, Mail, Moon, Sun, MapPin, Printer } from "lucide-react";
 const nav = [
   { label: "Experience", id: "experience" },
@@ -49,7 +50,7 @@ const printContact = [...social].reverse().map(s => s.url.replace(/^https?:\/\/(
           <Button variant="ghost" type="button" id="print-resume"><Printer className="size-4" aria-hidden="true" />Print</Button>
         </div>
         <div class="mt-4 flex flex-wrap gap-x-5 gap-y-1 no-print">
-          {social.map(s => <a class="inline-flex min-h-10 items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary" href={s.url}>{s.label}<ArrowUpRight className="size-3.5" aria-hidden="true" /></a>)}
+          {social.map(s => <a class="inline-flex min-h-10 items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary" href={s.url}><ContactIcon name={s.label} class="size-4 shrink-0" />{s.label}</a>)}
         </div>
         <p class="hidden print-only">{printContact}</p>
       </div>
@@ -142,9 +143,9 @@ const printContact = [...social].reverse().map(s => s.url.replace(/^https?:\/\/(
       <p class="eyebrow">08 / Contact</p>
       <h2 id="contact-heading" class="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Let’s connect.</h2>
       <p class="mt-3 max-w-xl text-muted-foreground">For professional opportunities, open-source collaboration, or conversations about data engineering and software development.</p>
-      <div class="mt-6 flex flex-wrap gap-2">
-        <Button id="email" data-email-action data-user={resume.emailParts[0]} data-domain={resume.emailParts[1]} type="button"><Mail className="size-4" aria-hidden="true" />Email me</Button>
-        {resume.socials.map(s => <a class={buttonVariants({ variant: "outline" })} href={s.url}>{s.label}<ArrowUpRight className="size-4" aria-hidden="true" /></a>)}
+      <div class="contact-icons" role="group" aria-label="Contact and social profiles">
+        {resume.socials.map(s => <a class="contact-icon-link" href={s.url} aria-label={s.label} title={s.label}><ContactIcon name={s.label} class="contact-logo" /></a>)}
+        <button class="contact-icon-link" id="email" data-email-action data-user={resume.emailParts[0]} data-domain={resume.emailParts[1]} type="button" aria-label="Email me" title="Email me"><ContactIcon name="Email" class="contact-logo" /></button>
       </div>
       <noscript><p class="mt-3 text-sm text-muted-foreground">To email me directly, enable JavaScript or reach out on LinkedIn.</p></noscript>
     </section>

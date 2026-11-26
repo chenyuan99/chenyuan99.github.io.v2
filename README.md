@@ -47,3 +47,7 @@ All project cards remain represented in the archive. See `AGENTS.md` for reposit
 `src/data/engineering-notes.ts` is the typed, dated source for both external articles and internal case studies. The homepage lists published articles (titles, dates, languages and links verified against Medium) separately from source-based case studies. Keep summaries original, cite the public project sources, and avoid employer-confidential details or unverified claims.
 
 Case studies are prerendered at `/notes/<slug>/` with their own canonical URLs, Article JSON-LD, Open Graph metadata and sitemap entries. No client-side hydration is needed to discover or read them.
+
+## Contact icons
+
+The GitHub, LinkedIn, Medium and Google Scholar SVG marks in `ContactIcon.astro` are sourced from [Simple Icons 13.0.0](https://github.com/simple-icons/simple-icons/tree/13.0.0/icons) ([CC0 license](https://github.com/simple-icons/simple-icons/blob/13.0.0/LICENSE.md)). Brand marks identify the linked services and are not an indication of endorsement. The email envelope is a generic icon. All SVGs are local, use theme colors, and are decorative within accessible labeled controls.

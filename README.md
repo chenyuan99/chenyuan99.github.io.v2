@@ -4,7 +4,7 @@ A static, code-first resume and contact site built with Astro, React, Tailwind C
 
 ## Develop
 
-Node.js 22 or later is recommended.
+Node.js 22.23.4 or later is required. TypeScript 6 is used because the current `@astrojs/check` release supports TypeScript 5 and 6, but not 7. Keep `astro check` enabled; revisit the next major upgrade once the checker supports it.
 
 ```sh
 npm ci

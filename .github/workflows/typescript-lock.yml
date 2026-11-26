@@ -1,0 +1,49 @@
+name: Resolve TypeScript compatible lockfile
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  generate:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'dependabot/npm_and_yarn/development-b7ceb5d816'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: dependabot/npm_and_yarn/development-b7ceb5d816
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+      - name: Resolve compatible npm lock
+        run: npm install --package-lock-only --ignore-scripts --no-audit
+      - run: npm ci
+      - name: Commit lockfile
+        id: commit_lock
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json
+          if ! git diff --cached --quiet; then
+            git commit -m "build: resolve TypeScript 6 lockfile with Astro 7"
+            git push origin HEAD:refs/heads/dependabot/npm_and_yarn/development-b7ceb5d816
+          fi
+      - name: Record generated lock if branch write is unavailable
+        if: failure() && steps.commit_lock.outcome == 'failure'
+        run: |
+          echo "LOCKFILE_GZIP_BASE64_BEGIN"
+          gzip -c package-lock.json | base64 -w 1000
+          echo
+          echo "LOCKFILE_GZIP_BASE64_END"
+      - run: npm run check
+      - name: Upload resolved lockfile
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: typescript-compatible-lockfile
+          path: package-lock.json
+          if-no-files-found: warn
+          retention-days: 7

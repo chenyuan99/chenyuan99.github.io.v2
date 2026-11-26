@@ -1,4 +1,6 @@
 ---
+import "@fontsource-variable/geist/wght.css";
+import "@fontsource-variable/geist-mono/wght.css";
 import "@/styles/global.css";
 import { resume } from "@/data/resume";
 const canonical = new URL("/", Astro.site);
@@ -28,7 +30,9 @@ const structured = { "@context":"https://schema.org", "@type":"Person", name:res
     try {
       const stored = localStorage.getItem("theme");
       document.documentElement.classList.toggle("dark", stored ? stored === "dark" : matchMedia("(prefers-color-scheme: dark)").matches);
-    } catch {}
+    } catch {
+      document.documentElement.classList.toggle("dark", matchMedia("(prefers-color-scheme: dark)").matches);
+    }
   </script>
 </head>
 <body>

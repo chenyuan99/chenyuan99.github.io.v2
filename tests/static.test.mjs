@@ -16,3 +16,9 @@ test("SEO assets",()=>{
   for (const path of ["dist/og.png","dist/sitemap-index.xml","dist/robots.txt","dist/favicon.svg"]) assert.ok(existsSync(path),path);
   assert.ok(readFileSync("dist/robots.txt","utf8").includes("sitemap-index.xml"));
 });
+
+test("editorial design keeps core actions and section navigation", () => {
+  for (const value of ['class="hero-title"', 'class="experience-row"', 'data-nav-section="experience"', 'data-nav-section="contact"', 'id="theme-toggle"', 'id="print-resume"']) assert.ok(html.includes(value), value);
+  assert.equal((html.match(/<button\b[^>]*\sdata-email-action(?:=|\s|>)/g) ?? []).length, 2);
+  assert.ok(html.includes('Backend &amp; distributed systems') || html.includes('Backend & distributed systems'));
+});

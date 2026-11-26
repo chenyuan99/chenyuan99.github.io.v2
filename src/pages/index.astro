@@ -14,6 +14,7 @@ const nav = [
   { label: "Research", id: "research" },
   { label: "Contact", id: "contact" },
 ];
+const credentials: readonly { name: string; issuer: string; year: string; url?: string }[] = resume.credentials;
 const social = resume.socials.filter(s => s.label === "GitHub" || s.label === "LinkedIn");
 const printContact = [...social].reverse().map(s => s.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")).join(" · ");
 ---
@@ -132,8 +133,8 @@ const printContact = [...social].reverse().map(s => s.url.replace(/^https?:\/\/(
     <section id="credentials" class="section-block" aria-labelledby="credentials-heading">
       <div class="section-heading"><span class="section-index">07 /</span><h2 id="credentials-heading">Credentials</h2></div>
       <div class="grid gap-5 sm:grid-cols-2">
-        {resume.credentials.map(c => <article>
-          <h3 class="font-semibold tracking-tight">{"url" in c ? <a class="hover:text-primary hover:underline" href={c.url}>{c.name} ↗</a> : c.name}</h3>
+        {credentials.map(c => <article>
+          <h3 class="font-semibold tracking-tight">{c.url ? <a class="hover:text-primary hover:underline" href={c.url}>{c.name} ↗</a> : c.name}</h3>
           <p class="mt-1 text-sm text-muted-foreground">{c.issuer} · {c.year}</p>
         </article>)}
       </div>

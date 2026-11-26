@@ -146,3 +146,14 @@ test("contact row uses accessible inline SVG platform logos", () => {
   }
   assert.ok(!contact.includes("ArrowUpRight"), "contact controls use brand marks rather than generic arrows");
 });
+
+test("AWS Solutions Architect certification links to the confirmed Credly badge", () => {
+  const start = html.indexOf('id="credentials"');
+  const credentials = html.slice(start, html.indexOf("</section>", start));
+  assert.ok(credentials.includes("AWS Certified Solutions Architect – Associate"));
+  assert.ok(credentials.includes("Amazon Web Services (AWS)"));
+  assert.ok(credentials.includes("2026"));
+  assert.ok(credentials.includes('href="https://www.credly.com/badges/9c2f1d24-98f5-4ef3-8ca9-9cf7edb857ea"'));
+  assert.ok(credentials.includes("Machine Learning"));
+  assert.ok(!credentials.includes("Summer Learning Academy Extern"));
+});

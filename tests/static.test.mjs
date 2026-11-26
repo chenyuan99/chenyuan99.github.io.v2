@@ -155,5 +155,5 @@ test("AWS Solutions Architect certification links to the confirmed Credly badge"
   assert.ok(credentials.includes("2026"));
   assert.ok(credentials.includes('href="https://www.credly.com/badges/9c2f1d24-98f5-4ef3-8ca9-9cf7edb857ea"'));
   assert.ok(credentials.includes("Machine Learning"));
-  assert.ok(credentials.includes("AT&T Summer Learning Academy Extern") || credentials.includes("AT&amp;T Summer Learning Academy Extern"));
+  assert.ok(!credentials.includes("Summer Learning Academy Extern"));
 });

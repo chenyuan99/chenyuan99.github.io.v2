@@ -268,11 +268,6 @@ export const resume = {
       "issuer": "Coursera",
       "year": "2020",
       "url": "https://www.coursera.org/account/accomplishments/verify/7R2WKGFNLGQR"
-    },
-    {
-      "name": "AT&T Summer Learning Academy Extern",
-      "issuer": "AT&T",
-      "year": "2021"
     }
   ]
 } as const;

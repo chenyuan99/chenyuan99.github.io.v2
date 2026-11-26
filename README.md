@@ -41,3 +41,9 @@ The curated showcase narratives derive from public, project-owned material. No a
 - [BenchmarkLLM source](https://github.com/chenyuan99/benchmarkLLM/blob/main/lmstudio_benchmark/lmstudio_benchmark/main.py). The SVG is an original measurement-pipeline illustration, not reported benchmark results.
 
 All project cards remain represented in the archive. See `AGENTS.md` for repository guidance.
+
+## Engineering notes
+
+`src/data/engineering-notes.ts` is the typed, dated source for both external articles and internal case studies. The homepage lists published articles (titles, dates, languages and links verified against Medium) separately from source-based case studies. Keep summaries original, cite the public project sources, and avoid employer-confidential details or unverified claims.
+
+Case studies are prerendered at `/notes/<slug>/` with their own canonical URLs, Article JSON-LD, Open Graph metadata and sitemap entries. No client-side hydration is needed to discover or read them.

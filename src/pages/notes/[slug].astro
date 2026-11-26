@@ -1,0 +1,52 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { caseStudies, formatNoteDate, type CaseStudy } from "@/data/engineering-notes";
+import { resume } from "@/data/resume";
+import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
+
+export function getStaticPaths() {
+  return caseStudies.map(note => ({ params: { slug: note.slug }, props: { note } }));
+}
+interface Props { note: CaseStudy }
+const { note } = Astro.props;
+---
+<BaseLayout title={note.title} description={note.summary} path={`/notes/${note.slug}/`} article={{ datePublished: note.date, topics: note.topics, citations: note.sources.map(source => source.url) }}>
+  <header class="site-header">
+    <div class="shell flex flex-wrap items-center justify-between gap-2 py-2">
+      <a href="/" class="inline-flex min-h-11 items-center gap-2.5 font-semibold tracking-tight" aria-label="Yuan Chen, home">
+        <span class="grid size-8 place-items-center rounded-lg bg-primary font-mono text-xs text-primary-foreground">YC</span>
+        <span>{resume.name}</span>
+      </a>
+      <a href="/#notes" class="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-primary hover:underline"><ArrowLeft className="size-4" aria-hidden="true" />Engineering notes</a>
+    </div>
+  </header>
+  <main id="main" class="shell">
+    <article class="note-article">
+      <header class="note-article-header">
+        <p class="eyebrow">Technical case study · Public project</p>
+        <h1>{note.title}</h1>
+        <p class="note-article-summary">{note.summary}</p>
+        <p class="mt-4 text-sm text-muted-foreground">Yuan Chen · <time datetime={note.date}>{formatNoteDate(note.date)}</time></p>
+        <ul class="mt-4 flex flex-wrap gap-1.5" aria-label="Topics">{note.topics.map(topic => <li><Badge>{topic}</Badge></li>)}</ul>
+      </header>
+      {note.sections.map((section, i) => <section class="note-article-section" aria-labelledby={`section-${i}`}>
+        <h2 id={`section-${i}`}>{section.heading}</h2>
+        {section.paragraphs.map(paragraph => <p>{paragraph}</p>)}
+      </section>)}
+      <section class="note-article-section" aria-labelledby="sources-heading">
+        <h2 id="sources-heading">Public sources</h2>
+        <ul class="mt-3">
+          {note.sources.map(source => <li><a class="note-source" href={source.url}>{source.label}<ArrowUpRight className="size-4 shrink-0" aria-hidden="true" /></a></li>)}
+        </ul>
+      </section>
+      <a href="/#notes" class="mt-10 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-primary hover:underline"><ArrowLeft className="size-4" aria-hidden="true" />All engineering notes</a>
+    </article>
+  </main>
+  <footer class="border-t border-border">
+    <div class="shell flex flex-wrap justify-between gap-3 py-5 text-xs text-muted-foreground">
+      <span>© {new Date().getFullYear()} Yuan Chen</span>
+      <a href="https://github.com/chenyuan99/chenyuan99.github.io.v2" class="hover:underline">View source ↗</a>
+    </div>
+  </footer>
+</BaseLayout>

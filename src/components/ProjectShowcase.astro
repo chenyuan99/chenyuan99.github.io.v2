@@ -6,12 +6,12 @@ import { ArrowUpRight } from "lucide-react";
 ---
 <section id="projects" class="section-block" aria-labelledby="projects-heading">
   <div class="mb-6 flex flex-wrap items-baseline justify-between gap-3">
-    <div class="section-heading section-heading--inline"><span class="section-index">04 /</span><h2 id="projects-heading">Selected projects</h2></div>
+    <div class="section-heading section-heading--inline"><h2 id="projects-heading">Selected projects</h2></div>
     <a class="inline-flex min-h-10 items-center gap-1 text-sm font-medium text-primary hover:underline" href={resume.socials[0].url}>All repositories <ArrowUpRight className="size-4" aria-hidden="true" /></a>
   </div>
   <p class="mb-7 max-w-2xl text-muted-foreground">Three featured projects across consumer software, document intelligence, and developer tooling.</p>
   <div class="featured-projects">
-    {featuredProjects.map((item, i) => <article class="featured-project" data-featured-project={item.name}>
+    {featuredProjects.map(item => <article class="featured-project" data-featured-project={item.name}>
       <figure class:list={["project-visual", item.image.kind === "product" ? "project-visual--product" : "project-visual--architecture"]}>
         <div class="project-image-frame">
           <img src={item.image.src} alt={item.image.alt} width={item.image.width} height={item.image.height} loading="lazy" decoding="async" />
@@ -19,7 +19,7 @@ import { ArrowUpRight } from "lucide-react";
         <figcaption>{item.image.caption}</figcaption>
       </figure>
       <div class="project-details">
-        <p class="eyebrow mb-2">Featured / 0{i + 1}</p>
+        <p class="eyebrow mb-2">Featured</p>
         <h3 class="project-title">{item.name}</h3>
         <p class="mt-2 text-base text-muted-foreground">{item.project.description}</p>
         <dl class="project-narrative">

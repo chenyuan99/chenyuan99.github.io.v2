@@ -151,11 +151,6 @@ a:focus-visible, button:focus-visible {
   line-height: 1.2;
   letter-spacing: -.045em;
 }
-.section-index {
-  font: 500 .6875rem var(--font-mono);
-  letter-spacing: .05em;
-  color: var(--primary);
-}
 .experience-row {
   display: grid;
   gap: .75rem;

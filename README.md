@@ -47,7 +47,7 @@ npm run test:lighthouse
 
 CI uses Ubuntu 24.04 and the locked Playwright Chromium version. Baselines live in `tests/e2e/__screenshots__` (desktop/mobile, light/dark, and printable résumé). For intentional design changes, run `npm run test:visual:update` in a matching Linux environment, review the before/after screenshots, and commit only expected changes. Never refresh baselines merely to make a failing test pass. The CI artifact contains Playwright HTML reports, axe results, screenshot diffs, a browser-generated print PDF and Lighthouse reports. Inspect desktop/mobile previews and print output before merging.
 
-The built-asset script caps raw JavaScript, CSS, fonts, images, document size and overall output, and rejects unexpected hydration. Lighthouse enforces mobile performance, accessibility, best practices, SEO, LCP, CLS, blocking time and transferred-resource budgets using three runs per page. Automated axe checks complement, not replace, keyboard and manual accessibility review. Dependabot checks npm and workflow dependencies weekly.
+The built-asset script caps raw emitted JavaScript (including Astro's unused React client artifact), CSS, fonts, images, document size and overall output. The HTML-referenced scripts and inline code have a separate 30 KiB budget, and unexpected hydration is rejected. Lighthouse enforces mobile performance, accessibility, best practices, SEO, LCP, CLS, blocking time and transferred-resource budgets using three runs per page. Automated axe checks complement, not replace, keyboard and manual accessibility review. Dependabot checks npm and workflow dependencies weekly.
 
 ## Featured project sources
 

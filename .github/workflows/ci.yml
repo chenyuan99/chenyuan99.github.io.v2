@@ -16,15 +16,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: npm
       - run: npm ci
       - run: npm run check
-      - run: npm run build
+      - name: Build static site
+        id: build_site
+        run: npm run build
       - run: npm test
       - run: npm run test:budget
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - name: Run Lighthouse budgets
-        if: success() || failure()
+        if: ${{ !cancelled() && steps.build_site.outcome == 'success' }}
         run: npm run test:lighthouse
       - name: Upload quality reports
         if: always()

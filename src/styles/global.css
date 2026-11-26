@@ -221,3 +221,45 @@ a:focus-visible, button:focus-visible {
   .print-only { display: block !important; } .screen-only { display: none !important; }
   .skill-group, .education-entry { padding: 0; }
 }
+
+/* Featured work: editorial rows, responsive media and a compact complete archive. */
+.featured-projects { display: grid; gap: 1.25rem; }
+.featured-project {
+  display: grid;
+  gap: clamp(1.25rem, 3.5vw, 2.5rem);
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  background: var(--card);
+  padding: clamp(1rem, 3vw, 1.75rem);
+}
+.project-visual { min-width: 0; margin: 0; }
+.project-image-frame {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  padding: clamp(.75rem, 2vw, 1.25rem);
+  border-radius: .625rem;
+  background: var(--muted);
+}
+.project-visual--product .project-image-frame {
+  background: #201912;
+}
+.project-image-frame img { display: block; max-width: 100%; height: auto; }
+.project-visual--product img { max-height: 25rem; width: auto; border-radius: .3rem; }
+.project-visual--architecture img { width: 100%; }
+.project-visual figcaption { margin-top: .6rem; color: var(--muted-foreground); font-size: .75rem; line-height: 1.5; }
+.project-details { min-width: 0; }
+.project-title { font-size: clamp(1.55rem, 3vw, 2rem); line-height: 1.2; font-weight: 650; letter-spacing: -.045em; }
+.project-narrative { display: grid; gap: .75rem; margin-top: 1.25rem; }
+.project-narrative dt { font-size: .75rem; font-weight: 650; color: var(--primary); }
+.project-narrative dd { margin: .15rem 0 0; color: var(--muted-foreground); font-size: .875rem; line-height: 1.6; }
+.project-link { display: inline-flex; gap: .5rem; align-items: center; min-height: 2.75rem; margin-top: .75rem; font-size: .875rem; font-weight: 600; color: var(--primary); }
+.project-link:hover { text-decoration: underline; }
+.project-archive { margin-top: clamp(2.5rem, 5vw, 4rem); }
+.archive-row { display: grid; align-items: baseline; gap: .4rem; padding-block: .75rem; min-width: 0; }
+.archive-tags { overflow-wrap: anywhere; }
+@media (min-width: 48rem) {
+  .featured-project { grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); align-items: center; }
+  .archive-row { grid-template-columns: minmax(0, 1fr) minmax(8rem, .4fr); gap: 1.5rem; }
+  .archive-tags { text-align: right; }
+}

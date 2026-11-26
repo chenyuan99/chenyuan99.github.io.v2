@@ -153,6 +153,12 @@ export const resume = {
       ]
     },
     {
+      "name": "TaxFront",
+      "description": "AI-assisted tax document management, structured extraction, and preparation reports.",
+      "url": "https://github.com/chenyuan99/TaxFront",
+      "tags": ["TypeScript", "Firebase", "Genkit"]
+    },
+    {
       "name": "OpenRisk",
       "description": "Automate Risk Office with AI",
       "url": "https://github.com/chenyuan99/openrisk",

@@ -22,3 +22,29 @@ test("editorial design keeps core actions and section navigation", () => {
   assert.equal((html.match(/<button\b[^>]*\sdata-email-action(?:=|\s|>)/g) ?? []).length, 2);
   assert.ok(html.includes('Backend &amp; distributed systems') || html.includes('Backend & distributed systems'));
 });
+
+test("featured projects have narrative, local responsive media, and real links", () => {
+  const featured = ["StageLight", "TaxFront", "BenchmarkLLM"];
+  for (const name of featured) assert.ok(html.includes('data-featured-project="'+name+'"'), name);
+  assert.equal((html.match(/data-featured-project="/g) ?? []).length, featured.length);
+  for (const heading of ["Problem", "Approach", "Outcome"]) assert.equal((html.match(new RegExp("<dt>"+heading+"</dt>", "g")) ?? []).length, featured.length);
+  for (const [asset, url] of [
+    ["stagelight-memory-card.jpg", "https://yuanchen.io/StageLight/"],
+    ["taxfront-architecture.svg", "https://github.com/chenyuan99/TaxFront"],
+    ["benchmarkllm-architecture.svg", "https://github.com/chenyuan99/benchmarkLLM"],
+  ]) {
+    const path = "/projects/" + asset;
+    assert.ok(existsSync("dist" + path), path);
+    assert.ok(readFileSync("dist"+path).length < 120_000, "keep visuals lightweight");
+    const image = [...html.matchAll(/<img\b[^>]*>/g)].map(match=>match[0]).find(tag=>tag.includes('src="'+path+'"'));
+    assert.ok(image, path);
+    for (const attr of [/alt="[^"]{20,}"/, /width="\d+"/, /height="\d+"/, /loading="lazy"/, /decoding="async"/]) assert.match(image, attr);
+    assert.ok(html.includes('href="'+url+'"'), url);
+  }
+});
+
+test("complete project archive retains all previous projects and TaxFront", () => {
+  const names = ["StageLight", "TaxFront", "OpenRisk", "BenchmarkLLM", "Card Art Studio", "openPark", "OwlSavesCats", "PaperHub", "Petti.vip", "PolyPredict"];
+  for (const name of names) assert.ok(html.includes('data-archive-project="'+name+'"'), name);
+  assert.equal((html.match(/data-archive-project="/g) ?? []).length, names.length);
+});

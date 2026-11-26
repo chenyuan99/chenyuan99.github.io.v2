@@ -318,3 +318,38 @@ a:focus-visible, button:focus-visible {
   width: clamp(1.5rem, 4vw, 1.875rem);
   height: clamp(1.5rem, 4vw, 1.875rem);
 }
+
+/* Personal brand: supplied CY monogram and stacked YUAN / CHEN wordmark. */
+.site-brand-mark {
+  width: 2.5rem;
+  height: auto;
+  flex: none;
+}
+.hero-wordmark {
+  display: block;
+  width: min(100%, 22rem);
+  height: auto;
+}
+.dark .site-brand-mark, .dark .hero-wordmark { filter: invert(1); }
+.brand-heading-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media print {
+  .hero-wordmark { display: none; }
+  .brand-heading-text {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+  }
+}

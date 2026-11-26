@@ -157,3 +157,22 @@ test("AWS Solutions Architect certification links to the confirmed Credly badge"
   assert.ok(credentials.includes("Machine Learning"));
   assert.ok(!credentials.includes("Summer Learning Academy Extern"));
 });
+
+test("personal branding uses local SVG marks with semantic heading and favicon", () => {
+  for (const path of ["dist/brand/cy.svg", "dist/brand/yuan-chen.svg", "dist/favicon.svg"]) {
+    assert.ok(existsSync(path), path);
+    const svg = readFileSync(path, "utf8");
+    assert.ok(svg.includes("<svg"), path);
+    assert.ok(Buffer.byteLength(svg) < 10000, "brand mark remains lightweight");
+  }
+  assert.ok(html.includes('src="/brand/cy.svg"'));
+  assert.ok(html.includes('src="/brand/yuan-chen.svg"'));
+  assert.ok(html.includes('class="brand-heading-text">Yuan Chen</span>'));
+  assert.ok(html.includes('aria-label="Yuan Chen, home"'));
+  assert.ok(html.includes('href="/favicon.svg"'));
+  assert.ok(readFileSync("dist/favicon.svg","utf8").includes("CY monogram"));
+  for (const route of ["taxfront-document-semantics", "benchmarkllm-measurement-boundaries"]) {
+    const page = readFileSync("dist/notes/"+route+"/index.html","utf8");
+    assert.ok(page.includes('src="/brand/cy.svg"'));
+  }
+});

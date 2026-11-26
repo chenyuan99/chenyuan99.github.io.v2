@@ -4,79 +4,166 @@ import { resume } from "@/data/resume";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowUpRight, Download, Mail, Moon, Sun, Github, Linkedin, MapPin, Printer } from "lucide-react";
-const nav = [{label:"Experience",id:"experience"},{label:"Projects",id:"projects"},{label:"Research",id:"research"},{label:"Contact",id:"contact"}];
+import { ArrowUpRight, Download, Mail, Moon, Sun, MapPin, Printer } from "lucide-react";
+const nav = [
+  { label: "Experience", id: "experience" },
+  { label: "Projects", id: "projects" },
+  { label: "Research", id: "research" },
+  { label: "Contact", id: "contact" },
+];
+const social = resume.socials.filter(s => s.label === "GitHub" || s.label === "LinkedIn");
 ---
 <BaseLayout>
-  <header class="sticky top-0 z-30 border-b border-border bg-background/95 backdrop-blur">
-    <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-5 py-3 sm:px-8">
-      <a href="/" class="flex items-center gap-2 font-semibold tracking-tight"><span class="grid size-9 place-items-center rounded-lg bg-primary text-sm text-primary-foreground">YC</span><span>Yuan Chen</span></a>
-      <nav aria-label="Main navigation" class="order-3 flex w-full flex-wrap gap-x-5 gap-y-2 text-sm font-medium text-muted-foreground sm:order-none sm:w-auto">{nav.map(n=><a class="hover:text-primary" href={'#'+n.id}>{n.label}</a>)}</nav>
-      <Button variant="ghost" size="icon" id="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false"><Moon className="size-4 dark:hidden" aria-hidden="true" /><Sun className="hidden size-4 dark:block" aria-hidden="true" /></Button>
+  <header class="site-header">
+    <div class="shell flex flex-wrap items-center justify-between gap-x-4 gap-y-0 py-2 md:flex-nowrap">
+      <a href="/" class="flex min-h-11 items-center gap-2.5 font-semibold tracking-tight" aria-label="Yuan Chen, home">
+        <span class="grid size-8 place-items-center rounded-lg bg-primary font-mono text-xs text-primary-foreground">YC</span>
+        <span>Yuan Chen</span>
+      </a>
+      <nav aria-label="Main navigation" class="site-nav order-3 w-full md:order-none md:w-auto">
+        {nav.map(n => <a data-nav-section={n.id} href={'#' + n.id}>{n.label}</a>)}
+      </nav>
+      <Button variant="ghost" size="icon" id="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">
+        <Moon className="size-4 dark:hidden" aria-hidden="true" />
+        <Sun className="hidden size-4 dark:block" aria-hidden="true" />
+      </Button>
     </div>
   </header>
-  <main id="main" class="mx-auto max-w-5xl px-5 pb-14 sm:px-8">
-    <section class="grid gap-8 border-b border-border py-14 sm:py-20 md:grid-cols-[1.7fr_1fr] md:items-end" aria-labelledby="intro">
-      <div>
-        <div class="mb-5 flex items-center gap-2 font-mono text-xs uppercase tracking-[.16em] text-primary screen-only"><span class="size-2 rounded-full bg-primary"></span> Engineer · Builder</div>
-        <h1 id="intro" class="text-5xl font-semibold leading-[1.05] tracking-[-.06em] sm:text-7xl">{resume.name}</h1>
-        <p class="mt-4 text-xl font-medium text-primary sm:text-2xl">{resume.title}</p>
-        <p class="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">{resume.summary}</p>
-        <p class="mt-5 flex items-center gap-2 text-sm text-muted-foreground"><MapPin className="size-4" aria-hidden="true" />{resume.location}</p>
-        <div class="mt-7 flex flex-wrap gap-2 no-print">
+
+  <main id="main" class="shell pb-12">
+    <section class="hero" aria-labelledby="intro">
+      <div class="min-w-0">
+        <p class="eyebrow mb-5 screen-only">Software engineering</p>
+        <h1 id="intro" class="hero-title">{resume.name}</h1>
+        <p class="hero-role mt-4">{resume.title} <span class="text-muted-foreground">· Backend & distributed systems</span></p>
+        <p class="hero-copy mt-5 text-muted-foreground">{resume.summary}</p>
+        <div class="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+          <span class="inline-flex items-center gap-2"><MapPin className="size-4 text-primary" aria-hidden="true" />{resume.location}</span>
+        </div>
+        <div class="mt-8 flex flex-wrap gap-2 no-print">
           <a class={buttonVariants()} href="/resume.pdf" download="Yuan_Chen_Resume.pdf"><Download className="size-4" aria-hidden="true" />Download résumé</a>
-          <a class={buttonVariants({variant:"outline"})} href="#contact">Get in touch <ArrowUpRight className="size-4" aria-hidden="true" /></a>
+          <Button variant="outline" data-email-action data-user={resume.emailParts[0]} data-domain={resume.emailParts[1]} type="button"><Mail className="size-4" aria-hidden="true" />Email me</Button>
           <Button variant="ghost" type="button" id="print-resume"><Printer className="size-4" aria-hidden="true" />Print</Button>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-x-5 gap-y-1 no-print">
+          {social.map(s => <a class="inline-flex min-h-10 items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary" href={s.url}>{s.label}<ArrowUpRight className="size-3.5" aria-hidden="true" /></a>)}
         </div>
         <p class="hidden print-only">linkedin.com/in/yuancc · github.com/chenyuan99</p>
       </div>
-      <aside class="rounded-xl border border-border bg-card p-6 screen-only" aria-label="Professional focus">
-        <p class="mb-5 text-xs font-semibold uppercase tracking-widest text-muted-foreground">Currently focused on</p>
-        <ul class="space-y-4">{resume.focus.map((f,i)=><li class="flex items-center gap-3 text-sm font-medium"><span class="font-mono text-primary">0{i+1}</span>{f}</li>)}</ul>
-        <div class="mt-5 border-t border-border pt-4 text-sm text-muted-foreground">Based in the NYC metro area</div>
+
+      <aside class="current-focus screen-only" aria-label="Professional focus">
+        <p class="eyebrow mb-4">Currently</p>
+        <p class="text-lg font-semibold tracking-tight">{resume.experience[0].company}</p>
+        <p class="mt-1 text-sm text-muted-foreground">{resume.experience[0].role}</p>
+        <p class="eyebrow mt-7 mb-3">Focus areas</p>
+        <ul class="space-y-2.5">
+          {resume.focus.map(f => <li class="flex items-center gap-2.5 text-sm text-foreground"><span class="size-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true"></span>{f}</li>)}
+        </ul>
       </aside>
     </section>
-    <section id="experience" class="mt-12" aria-labelledby="experience-heading">
-      <div class="mb-6 flex items-baseline gap-3"><span class="font-mono text-xs text-primary no-print">01 /</span><h2 id="experience-heading" class="text-2xl font-semibold tracking-tight">Experience</h2></div>
-      <div class="experience-grid grid gap-4">
-        {resume.experience.map(job=><Card className="grid gap-4 md:grid-cols-[200px_1fr]">
-          <div><p class="font-mono text-xs text-primary">{job.period}</p><p class="mt-2 text-sm text-muted-foreground">{job.location}</p></div>
-          <div><h3 class="text-lg font-semibold">{job.role}</h3><p class="mt-1 text-sm font-medium text-muted-foreground">{job.company}</p><ul class="mt-3 list-disc space-y-1 pl-4 text-sm leading-relaxed text-muted-foreground">{job.bullets.map(b=><li>{b}</li>)}</ul><div class="mt-4 flex flex-wrap gap-1.5 no-print">{job.tags.map(t=><Badge>{t}</Badge>)}</div></div>
+
+    <section id="experience" class="section-block" aria-labelledby="experience-heading">
+      <div class="section-heading">
+        <span class="section-index no-print">01 /</span>
+        <h2 id="experience-heading">Experience</h2>
+      </div>
+      <ol class="experience-grid">
+        {resume.experience.map(job => <li class="experience-row">
+          <div class="experience-meta">
+            <p class="font-mono text-xs font-medium text-primary">{job.period}</p>
+            <p class="mt-1.5 text-xs text-muted-foreground">{job.location}</p>
+          </div>
+          <article class="min-w-0">
+            <h3 class="experience-company">{job.company}</h3>
+            <p class="experience-role mt-1">{job.role}</p>
+            <ul class="experience-bullets text-sm leading-relaxed text-muted-foreground">{job.bullets.map(b => <li>{b}</li>)}</ul>
+            <div class="mt-4 flex flex-wrap gap-1.5 no-print">{job.tags.map(t => <Badge>{t}</Badge>)}</div>
+          </article>
+        </li>)}
+      </ol>
+    </section>
+
+    <section id="skills" class="section-block" aria-labelledby="skills-heading">
+      <div class="section-heading">
+        <span class="section-index no-print">02 /</span>
+        <h2 id="skills-heading">Technical skills</h2>
+      </div>
+      <div class="grid gap-6 md:grid-cols-3">
+        {resume.skills.map(s => <div class="skill-group">
+          <h3 class="text-sm font-semibold">{s.category}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{s.items.join(" · ")}</p>
+        </div>)}
+      </div>
+    </section>
+
+    <section id="education" class="section-block" aria-labelledby="education-heading">
+      <div class="section-heading">
+        <span class="section-index no-print">03 /</span>
+        <h2 id="education-heading">Education</h2>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2">
+        {resume.education.map(e => <article class="education-entry">
+          <p class="font-mono text-xs text-primary">{e.period}</p>
+          <h3 class="mt-1.5 text-lg font-semibold tracking-tight">{e.school}</h3>
+          <p class="mt-1 text-sm text-muted-foreground">{e.degree}</p>
+          <p class="mt-1 text-xs text-muted-foreground">{e.location}</p>
+        </article>)}
+      </div>
+    </section>
+
+    <section id="projects" class="section-block" aria-labelledby="projects-heading">
+      <div class="mb-6 flex flex-wrap items-baseline justify-between gap-3">
+        <div class="section-heading section-heading--inline"><span class="section-index">04 /</span><h2 id="projects-heading">Selected projects</h2></div>
+        <a class="inline-flex min-h-10 items-center gap-1 text-sm font-medium text-primary hover:underline" href={resume.socials[0].url}>All repositories <ArrowUpRight className="size-4" aria-hidden="true" /></a>
+      </div>
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {resume.projects.map(p => <Card className="project-card flex min-w-0 flex-col">
+          <h3><a class="flex items-start justify-between gap-2 font-semibold tracking-tight hover:text-primary" href={p.url}>{p.name}<ArrowUpRight className="size-4 shrink-0 text-primary" aria-hidden="true" /></a></h3>
+          <p class="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{p.description}</p>
+          <div class="mt-4 flex flex-wrap gap-1.5">{p.tags.map(t => <Badge>{t}</Badge>)}</div>
         </Card>)}
       </div>
     </section>
-    <section id="skills" class="mt-12" aria-labelledby="skills-heading">
-      <div class="mb-6 flex items-baseline gap-3"><span class="font-mono text-xs text-primary no-print">02 /</span><h2 id="skills-heading" class="text-2xl font-semibold tracking-tight">Technical skills</h2></div>
-      <div class="grid gap-3 md:grid-cols-3">{resume.skills.map(s=><Card><h3 class="mb-3 font-semibold">{s.category}</h3><div class="flex flex-wrap gap-1.5">{s.items.map(t=><Badge>{t}</Badge>)}</div></Card>)}</div>
+
+    <section id="research" class="section-block" aria-labelledby="research-heading">
+      <div class="section-heading"><span class="section-index">05 /</span><h2 id="research-heading">Research & publications</h2></div>
+      <div class="divide-y divide-border">
+        {resume.research.map(p => <article class="py-4 first:pt-0 last:pb-0">
+          <h3><a class="flex items-start justify-between gap-4 text-base font-medium tracking-tight hover:text-primary" href={p.url}>{p.title}<ArrowUpRight className="mt-1 size-4 shrink-0 text-primary" aria-hidden="true" /></a></h3>
+          <p class="mt-1.5 text-sm text-muted-foreground">{p.venue}</p>
+        </article>)}
+      </div>
     </section>
-    <section id="education" class="mt-12" aria-labelledby="education-heading">
-      <div class="mb-6 flex items-baseline gap-3"><span class="font-mono text-xs text-primary no-print">03 /</span><h2 id="education-heading" class="text-2xl font-semibold tracking-tight">Education</h2></div>
-      <div class="grid gap-3 sm:grid-cols-2">{resume.education.map(e=><Card><div class="mb-2 flex flex-wrap justify-between gap-2"><h3 class="font-semibold">{e.school}</h3><span class="font-mono text-xs text-primary">{e.period}</span></div><p class="text-sm text-muted-foreground">{e.degree}</p><p class="mt-2 text-xs text-muted-foreground">{e.location}</p></Card>)}</div>
+
+    <section id="credentials" class="section-block" aria-labelledby="credentials-heading">
+      <div class="section-heading"><span class="section-index">06 /</span><h2 id="credentials-heading">Credentials</h2></div>
+      <div class="grid gap-5 sm:grid-cols-2">
+        {resume.credentials.map(c => <article>
+          <h3 class="font-semibold tracking-tight">{"url" in c ? <a class="hover:text-primary hover:underline" href={c.url}>{c.name} ↗</a> : c.name}</h3>
+          <p class="mt-1 text-sm text-muted-foreground">{c.issuer} · {c.year}</p>
+        </article>)}
+      </div>
     </section>
-    <section id="projects" class="mt-12" aria-labelledby="projects-heading">
-      <div class="mb-6 flex flex-wrap items-baseline justify-between gap-3"><div class="flex items-baseline gap-3"><span class="font-mono text-xs text-primary">04 /</span><h2 id="projects-heading" class="text-2xl font-semibold tracking-tight">Selected projects</h2></div><a class="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline" href={resume.socials[0].url}>All repositories <ArrowUpRight className="size-4" aria-hidden="true" /></a></div>
-      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{resume.projects.map(p=><Card className="flex flex-col transition-shadow hover:shadow-sm"><a class="flex items-start justify-between gap-2 font-semibold hover:text-primary" href={p.url}><h3>{p.name}</h3><ArrowUpRight className="size-4 shrink-0 text-primary" aria-hidden="true" /></a><p class="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{p.description}</p><div class="mt-4 flex flex-wrap gap-1.5">{p.tags.map(t=><Badge>{t}</Badge>)}</div></Card>)}</div>
-    </section>
-    <section id="research" class="mt-12" aria-labelledby="research-heading">
-      <div class="mb-6 flex items-baseline gap-3"><span class="font-mono text-xs text-primary">05 /</span><h2 id="research-heading" class="text-2xl font-semibold tracking-tight">Research & publications</h2></div>
-      <div class="divide-y divide-border rounded-xl border border-border bg-card">{resume.research.map(p=><article class="p-5"><a class="flex items-start justify-between gap-4 font-medium hover:text-primary" href={p.url}><h3>{p.title}</h3><ArrowUpRight className="size-4 shrink-0 text-primary" aria-hidden="true" /></a><p class="mt-2 text-sm text-muted-foreground">{p.venue}</p></article>)}</div>
-    </section>
-    <section id="credentials" class="mt-12" aria-labelledby="credentials-heading">
-      <div class="mb-6 flex items-baseline gap-3"><span class="font-mono text-xs text-primary">06 /</span><h2 id="credentials-heading" class="text-2xl font-semibold tracking-tight">Credentials</h2></div>
-      <div class="grid gap-3 sm:grid-cols-2">{resume.credentials.map(c=><Card><h3 class="font-semibold">{"url" in c ? <a class="hover:text-primary hover:underline" href={c.url}>{c.name} ↗</a> : c.name}</h3><p class="mt-2 text-sm text-muted-foreground">{c.issuer} · {c.year}</p></Card>)}</div>
-    </section>
-    <section id="contact" class="mt-14 rounded-xl border border-border bg-card p-7 sm:p-9" aria-labelledby="contact-heading">
-      <p class="font-mono text-xs uppercase tracking-widest text-primary">07 / Contact</p>
-      <h2 id="contact-heading" class="mt-3 text-3xl font-semibold tracking-tight">Let’s connect.</h2>
+
+    <section id="contact" class="section-block border-b-0" aria-labelledby="contact-heading">
+      <p class="eyebrow">07 / Contact</p>
+      <h2 id="contact-heading" class="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Let’s connect.</h2>
       <p class="mt-3 max-w-xl text-muted-foreground">For professional opportunities, open-source collaboration, or conversations about data engineering and software development.</p>
       <div class="mt-6 flex flex-wrap gap-2">
-        <Button id="email" data-user={resume.emailParts[0]} data-domain={resume.emailParts[1]} type="button"><Mail className="size-4" aria-hidden="true" /> Email me</Button>
-        {resume.socials.map(s=><a class={buttonVariants({variant:"outline"})} href={s.url}>{s.label==="GitHub"?<Github className="size-4" aria-hidden="true"/>:s.label==="LinkedIn"?<Linkedin className="size-4" aria-hidden="true"/>:<ArrowUpRight className="size-4" aria-hidden="true"/>}{s.label}</a>)}
+        <Button id="email" data-email-action data-user={resume.emailParts[0]} data-domain={resume.emailParts[1]} type="button"><Mail className="size-4" aria-hidden="true" />Email me</Button>
+        {resume.socials.map(s => <a class={buttonVariants({ variant: "outline" })} href={s.url}>{s.label}<ArrowUpRight className="size-4" aria-hidden="true" /></a>)}
       </div>
       <noscript><p class="mt-3 text-sm text-muted-foreground">To email me directly, enable JavaScript or reach out on LinkedIn.</p></noscript>
     </section>
   </main>
-  <footer class="border-t border-border"><div class="mx-auto flex max-w-5xl flex-wrap justify-between gap-2 px-5 py-5 text-xs text-muted-foreground sm:px-8"><span>© {new Date().getFullYear()} Yuan Chen</span><a href="https://github.com/chenyuan99/chenyuan99.github.io.v2" class="hover:underline">Built with Astro · View source ↗</a></div></footer>
+
+  <footer class="border-t border-border">
+    <div class="shell flex flex-wrap justify-between gap-3 py-5 text-xs text-muted-foreground">
+      <span>© {new Date().getFullYear()} Yuan Chen</span>
+      <a href="https://github.com/chenyuan99/chenyuan99.github.io.v2" class="hover:underline">Built with Astro · View source ↗</a>
+    </div>
+  </footer>
+
   <script>
     const theme = document.getElementById("theme-toggle");
     theme?.setAttribute("aria-pressed", String(document.documentElement.classList.contains("dark")));
@@ -86,10 +173,35 @@ const nav = [{label:"Experience",id:"experience"},{label:"Projects",id:"projects
       try { localStorage.setItem("theme", dark ? "dark" : "light"); } catch {}
     });
     document.getElementById("print-resume")?.addEventListener("click", () => window.print());
-    const email = document.getElementById("email");
-    email?.addEventListener("click", () => {
-      const {user,domain} = email.dataset;
-      if (user && domain) window.location.href = "mailto:" + atob(user) + "@" + atob(domain);
+    document.querySelectorAll<HTMLButtonElement>("[data-email-action]").forEach(button => {
+      button.addEventListener("click", () => {
+        const { user, domain } = button.dataset;
+        if (user && domain) window.location.href = "mailto:" + atob(user) + "@" + atob(domain);
+      });
     });
+
+    const links = Array.from(document.querySelectorAll<HTMLAnchorElement>("[data-nav-section]"));
+    let frame = 0;
+    const updateNav = () => {
+      const headerBottom = document.querySelector("header")?.getBoundingClientRect().bottom ?? 0;
+      let current = "";
+      for (const link of links) {
+        const section = document.getElementById(link.dataset.navSection ?? "");
+        if (section && section.getBoundingClientRect().top <= headerBottom + 32) current = link.dataset.navSection ?? "";
+      }
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8) current = links.at(-1)?.dataset.navSection ?? current;
+      for (const link of links) {
+        if (link.dataset.navSection === current) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      }
+    };
+    const scheduleNav = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => { frame = 0; updateNav(); });
+    };
+    window.addEventListener("scroll", scheduleNav, { passive: true });
+    window.addEventListener("resize", scheduleNav);
+    window.addEventListener("hashchange", scheduleNav);
+    updateNav();
   </script>
 </BaseLayout>

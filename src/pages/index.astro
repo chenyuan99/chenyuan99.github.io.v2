@@ -14,6 +14,7 @@ const nav = [
   { label: "Contact", id: "contact" },
 ];
 const social = resume.socials.filter(s => s.label === "GitHub" || s.label === "LinkedIn");
+const printContact = [...social].reverse().map(s => s.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")).join(" · ");
 ---
 <BaseLayout>
   <header class="site-header">
@@ -50,7 +51,7 @@ const social = resume.socials.filter(s => s.label === "GitHub" || s.label === "L
         <div class="mt-4 flex flex-wrap gap-x-5 gap-y-1 no-print">
           {social.map(s => <a class="inline-flex min-h-10 items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary" href={s.url}>{s.label}<ArrowUpRight className="size-3.5" aria-hidden="true" /></a>)}
         </div>
-        <p class="hidden print-only">linkedin.com/in/yuancc · github.com/chenyuan99</p>
+        <p class="hidden print-only">{printContact}</p>
       </div>
 
       <aside class="current-focus screen-only" aria-label="Professional focus">

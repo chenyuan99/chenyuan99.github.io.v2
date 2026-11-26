@@ -31,7 +31,8 @@ export const GET: APIRoute = async () => {
   const heading = (text:string) => { y-=10; line(text.toUpperCase(),11,true,accent); y-=2; };
   line(resume.name,27,true);
   line(resume.title+" | "+resume.location,11,true,accent);
-  line("linkedin.com/in/yuancc | github.com/chenyuan99",9);
+  const printContact = resume.socials.filter(s => s.label === "LinkedIn" || s.label === "GitHub").slice().reverse().map(s => s.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "")).join(" | ");
+  line(printContact,9);
   y-=5; line(resume.summary);
   heading("Experience");
   for (const job of resume.experience) {

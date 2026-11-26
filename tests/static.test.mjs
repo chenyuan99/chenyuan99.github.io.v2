@@ -103,3 +103,26 @@ test("case study routes have unique SEO, public sources and a return link", () =
     assert.ok(!page.includes("astro-island"), "no hydration on case-study pages");
   }
 });
+
+test("contact destinations and structured identity remain verified and synchronized", () => {
+  const verifiedUrls = [
+    "https://github.com/chenyuan99",
+    "https://www.linkedin.com/in/yuancc/",
+    "https://yuanchentech.medium.com/",
+  ];
+  const contact = html.slice(html.indexOf('id="contact"'), html.indexOf("</section>", html.indexOf('id="contact"')));
+  for (const url of verifiedUrls) assert.ok(contact.includes('href="'+url+'"'), url);
+  assert.ok(!html.includes("PS_CX0AAAAAJ"), "AcademicPages template Scholar ID must never be published");
+  const structured = JSON.parse(html.match(/<script[^>]+type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/)[1]);
+  assert.deepEqual(structured.sameAs, verifiedUrls);
+  const buttons = [...html.matchAll(/<button\b[^>]*\sdata-email-action(?:=|\s|>)[^>]*>/g)].map(match => match[0]);
+  assert.equal(buttons.length, 2);
+  for (const button of buttons) {
+    const user = button.match(/data-user="([^"]+)"/)?.[1];
+    const domain = button.match(/data-domain="([^"]+)"/)?.[1];
+    assert.ok(user && domain, "email button has both encoded parts");
+    assert.equal(Buffer.from(user, "base64").toString("utf8") + "@" + Buffer.from(domain, "base64").toString("utf8"), "chenyuancareer@gmail.com");
+  }
+  assert.ok(!html.includes("chenyuancareer@gmail.com"), "email must remain obfuscated in static HTML");
+  assert.ok(html.includes("linkedin.com/in/yuancc · github.com/chenyuan99") || html.includes("linkedin.com/in/yuancc &#183; github.com/chenyuan99"), "print contact text uses the same verified profile paths");
+});

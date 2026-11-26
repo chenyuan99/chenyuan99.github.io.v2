@@ -28,5 +28,6 @@
       "destination": "/",
       "permanent": false
     }
-  ]
+  ],
+  "installCommand": "npm ci"
 }

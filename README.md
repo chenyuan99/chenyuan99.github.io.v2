@@ -7,7 +7,7 @@ A static, code-first resume and contact site built with Astro, React, Tailwind C
 Node.js 22 or later is recommended.
 
 ```sh
-npm install
+npm ci
 npm run dev
 npm run check
 npm run build
@@ -30,7 +30,24 @@ Migrated the real education, professional experience, and the portfolio entries 
 
 ## Quality checks
 
-GitHub Actions checks types, builds the site, and tests the static output (PDF, metadata, sitemap and content).
+GitHub Actions installs the committed lockfile with `npm ci`, checks types, builds the static site, and runs Node regression tests, Playwright desktop/mobile tests, axe WCAG A/AA checks, visual comparisons and Lighthouse budgets.
+
+```sh
+npm ci
+npm run check
+npm run build
+npm test
+npm run test:budget
+npx playwright install --with-deps chromium
+npm run test:e2e
+npm run test:lighthouse
+```
+
+### Review and update visual baselines
+
+CI uses Ubuntu 24.04 and the locked Playwright Chromium version. Baselines live in `tests/e2e/__screenshots__` (desktop/mobile, light/dark, and printable résumé). For intentional design changes, run `npm run test:visual:update` in a matching Linux environment, review the before/after screenshots, and commit only expected changes. Never refresh baselines merely to make a failing test pass. The CI artifact contains Playwright HTML reports, axe results, screenshot diffs, a browser-generated print PDF and Lighthouse reports. Inspect desktop/mobile previews and print output before merging.
+
+The built-asset script caps raw emitted JavaScript (including Astro's unused React client artifact), CSS, fonts, images, document size and overall output. The HTML-referenced scripts and inline code have a separate 30 KiB budget, and unexpected hydration is rejected. Lighthouse enforces mobile performance, accessibility, best practices, SEO, LCP, CLS, blocking time and transferred-resource budgets using three runs per page. Automated axe checks complement, not replace, keyboard and manual accessibility review. Dependabot checks npm and workflow dependencies weekly.
 
 ## Featured project sources
 

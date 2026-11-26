@@ -14,14 +14,14 @@ const { note } = Astro.props;
 <BaseLayout title={note.title} description={note.summary} path={`/notes/${note.slug}/`} article={{ datePublished: note.date, topics: note.topics, citations: note.sources.map(source => source.url) }}>
   <header class="site-header">
     <div class="shell flex flex-wrap items-center justify-between gap-2 py-2">
-      <a href="/" class="inline-flex min-h-11 items-center gap-2.5 font-semibold tracking-tight" aria-label="Yuan Chen, home">
+      <a href="/" class="inline-flex min-h-11 items-center gap-2.5 font-semibold tracking-tight" aria-label="YC Yuan Chen, home">
         <span class="grid size-8 place-items-center rounded-lg bg-primary font-mono text-xs text-primary-foreground">YC</span>
         <span>{resume.name}</span>
       </a>
       <a href="/#notes" class="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-primary hover:underline"><ArrowLeft className="size-4" aria-hidden="true" />Engineering notes</a>
     </div>
   </header>
-  <main id="main" class="shell">
+  <main id="main" tabindex="-1" class="shell">
     <article class="note-article">
       <header class="note-article-header">
         <p class="eyebrow">Technical case study · Public project</p>

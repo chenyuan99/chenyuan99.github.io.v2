@@ -1,0 +1,51 @@
+name: Generate initial quality baselines
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  generate:
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'v2-4-quality-gates'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v2-4-quality-gates
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Resolve npm lock
+        run: npm install --package-lock-only --ignore-scripts
+      - run: npm ci
+      - run: npm run check
+      - run: npm run build
+      - run: npm test
+      - run: npm run test:budget
+      - run: npx playwright install --with-deps chromium
+      - name: Generate screenshot baselines and print output
+        run: npm run test:visual:update
+      - name: Commit generated lockfile and screenshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json tests/e2e/__screenshots__
+          if ! git diff --cached --quiet; then
+            git commit -m "test: establish reproducible lockfile and visual baselines"
+            git push origin HEAD:refs/heads/v2-4-quality-gates
+          fi
+      - name: Upload baseline review artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: initial-portfolio-baselines
+          path: |
+            package-lock.json
+            tests/e2e/__screenshots__/
+            test-results/
+            playwright-report/
+          if-no-files-found: warn
+          retention-days: 14

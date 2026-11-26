@@ -1,0 +1,32 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@theme inline {
+  --color-background: var(--background); --color-foreground: var(--foreground);
+  --color-card: var(--card); --color-muted: var(--muted); --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary); --color-primary-foreground: var(--primary-foreground);
+  --color-border: var(--border); --color-ring: var(--primary);
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, monospace;
+}
+:root { color-scheme: light; --background:#fafaf9; --foreground:#17232c; --card:#fff; --muted:#f1f3f2; --muted-foreground:#4c5b63; --primary:#176b60; --primary-foreground:#fff; --border:#dce3df; }
+.dark { color-scheme: dark; --background:#101918; --foreground:#eef5f2; --card:#172320; --muted:#20312b; --muted-foreground:#b2c3bb; --primary:#83d6b9; --primary-foreground:#10231b; --border:#33453e; }
+html { scroll-behavior:smooth; scroll-padding-top:5rem; }
+body { margin:0; background:var(--background); color:var(--foreground); font-family:var(--font-sans); font-feature-settings:"ss01" on; }
+a { text-underline-offset:4px; }
+a:focus-visible, button:focus-visible { outline:2px solid var(--primary); outline-offset:4px; }
+::selection{background:var(--primary);color:var(--primary-foreground)}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto} *,*::before,*::after{transition:none!important}}
+@page { size: letter; margin: .6in; }
+@media print {
+  :root,.dark{color-scheme:light;--background:white;--foreground:#111;--card:white;--muted:white;--muted-foreground:#333;--primary:#111;--primary-foreground:white;--border:#ccc}
+  body{font-size:10pt;background:white;color:#111}
+  .no-print, .skip-link, header, footer, #contact, #projects, #research, #credentials {display:none!important}
+  main {max-width:none!important;padding:0!important}
+  section{margin:0 0 12pt!important; padding:0!important;}
+  article {break-inside:avoid; padding:0!important; border:0!important; background:white!important;}
+  h1{font-size:27pt!important;line-height:1.1!important}
+  h2{font-size:15pt!important} h3{font-size:12pt!important}
+  p,li{font-size:10pt!important;line-height:1.35!important}
+  .print-only{display:block!important} .screen-only{display:none!important}
+  .experience-grid{gap:8pt!important}
+}

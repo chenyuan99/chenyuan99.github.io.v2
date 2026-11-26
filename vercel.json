@@ -1,0 +1,32 @@
+{
+  "framework": "astro",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/cv",
+      "destination": "/#experience",
+      "permanent": false
+    },
+    {
+      "source": "/cv-json",
+      "destination": "/#experience",
+      "permanent": false
+    },
+    {
+      "source": "/portfolio",
+      "destination": "/#projects",
+      "permanent": false
+    },
+    {
+      "source": "/publications",
+      "destination": "/#research",
+      "permanent": false
+    },
+    {
+      "source": "/about",
+      "destination": "/",
+      "permanent": false
+    }
+  ]
+}

@@ -6,9 +6,9 @@ const collect = path => readdirSync(path, { withFileTypes: true })
   .flatMap(entry => entry.isDirectory() ? collect(join(path, entry.name)) : [join(path, entry.name)]);
 const files = collect(root);
 const limits = [
-  { label: "JavaScript", extensions: [".js", ".mjs"], max: 30 * 1024 },
-  { label: "CSS", extensions: [".css"], max: 100 * 1024 },
-  { label: "Fonts", extensions: [".woff2", ".woff", ".ttf", ".otf"], max: 700 * 1024 },
+  { label: "Emitted JavaScript", extensions: [".js", ".mjs"], max: 260 * 1024 },
+  { label: "CSS", extensions: [".css"], max: 50 * 1024 },
+  { label: "Fonts", extensions: [".woff2", ".woff", ".ttf", ".otf"], max: 200 * 1024 },
   { label: "Images", extensions: [".png", ".jpg", ".jpeg", ".webp", ".svg", ".avif"], max: 200 * 1024 },
 ];
 const size = paths => paths.reduce((sum, path) => sum + statSync(path).size, 0);
@@ -22,6 +22,7 @@ for (const { label, extensions, max } of limits) {
     failed = true;
   }
 }
+const jsFiles = files.filter(path => [".js", ".mjs"].includes(extname(path)));
 for (const path of files.filter(path => path.endsWith(".html"))) {
   const html = readFileSync(path, "utf8");
   if (html.includes("astro-island")) {
@@ -31,6 +32,13 @@ for (const path of files.filter(path => path.endsWith(".html"))) {
   const inlineScripts = [...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)]
     .filter(([, attrs]) => !attrs.includes("application/ld+json"))
     .reduce((sum, [, , source]) => sum + Buffer.byteLength(source), 0);
+  const referencedScripts = jsFiles.filter(file => html.includes(file.slice(root.length)));
+  const runtimeBytes = size(referencedScripts) + inlineScripts;
+  console.log(`${path}: ${ (runtimeBytes / 1024).toFixed(1) } KiB HTML-referenced/inline JS`);
+  if (runtimeBytes > 30 * 1024) {
+    console.error(`::error file=${path}::HTML-referenced and inline JS exceeds 30 KiB`);
+    failed = true;
+  }
   if (inlineScripts > 10 * 1024) {
     console.error(`::error file=${path}::Inline JS exceeds 10 KiB`);
     failed = true;
@@ -41,8 +49,8 @@ for (const path of files.filter(path => path.endsWith(".html"))) {
   }
 }
 console.log(`Total build: ${(size(files) / 1024).toFixed(1)} KiB`);
-if (size(files) > 1200 * 1024) {
-  console.error("::error::Total build exceeds 1,200 KiB");
+if (size(files) > 750 * 1024) {
+  console.error("::error::Total build exceeds 750 KiB");
   failed = true;
 }
 if (failed) process.exitCode = 1;

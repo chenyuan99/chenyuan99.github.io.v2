@@ -13,7 +13,7 @@
     "preview": "astro preview",
     "test": "node --test tests/*.test.mjs",
     "test:e2e": "playwright test",
-    "test:visual:update": "playwright test --grep @visual --update-snapshots",
+    "test:visual:update": "playwright test --grep @visual --update-snapshots=all",
     "test:budget": "node scripts/check-budgets.mjs",
     "test:lighthouse": "lhci autorun --config=./lighthouserc.cjs"
   },

@@ -176,3 +176,12 @@ test("personal branding uses local SVG marks with semantic heading and favicon",
     assert.ok(page.includes('src="/brand/cy.svg"'));
   }
 });
+
+test("section headings and featured project labels do not use decorative numbering", () => {
+  assert.ok(!html.includes('class="section-index'));
+  assert.ok(!html.includes("Featured / 0"));
+  assert.ok(!html.includes("08 / Contact"));
+  for (const title of ["Experience", "Technical skills", "Education", "Selected projects", "Engineering notes", "Credentials"]) assert.ok(html.includes(title), title);
+  assert.ok(html.includes("Research &amp; publications") || html.includes("Research & publications"));
+  assert.equal((html.match(/class="eyebrow mb-2">Featured<\/p>/g) ?? []).length, 3);
+});

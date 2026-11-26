@@ -258,6 +258,12 @@ export const resume = {
   ],
   "credentials": [
     {
+      "name": "AWS Certified Solutions Architect – Associate",
+      "issuer": "Amazon Web Services (AWS)",
+      "year": "2026",
+      "url": "https://www.credly.com/badges/9c2f1d24-98f5-4ef3-8ca9-9cf7edb857ea"
+    },
+    {
       "name": "Machine Learning",
       "issuer": "Coursera",
       "year": "2020",

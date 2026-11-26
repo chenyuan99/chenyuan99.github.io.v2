@@ -75,3 +75,22 @@ test("engineering case study is navigable and fits the viewport", async ({ page 
   await page.getByRole("link", { name: "All engineering notes" }).click();
   await expect(page).toHaveURL(/#notes$/);
 });
+
+test("brand artwork is visible, accessible and theme-aware", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "dark" });
+  await page.goto("/");
+  const heading = page.getByRole("heading", { name: "Yuan Chen", level: 1 });
+  const wordmark = heading.locator(".hero-wordmark");
+  const mark = page.locator(".site-brand-mark");
+  await expect(heading).toBeVisible();
+  await expect(wordmark).toBeVisible();
+  await expect(mark).toHaveCSS("filter", "invert(1)");
+  await expect(wordmark).toHaveCSS("filter", "invert(1)");
+  const size = await wordmark.evaluate((image: HTMLImageElement) => ({ ready: image.complete && image.naturalWidth > 0, width: image.getBoundingClientRect().width }));
+  expect(size.ready).toBe(true);
+  expect(size.width).toBeGreaterThan(100);
+  await page.getByRole("button", { name: "Toggle dark mode" }).click();
+  await expect(wordmark).toHaveCSS("filter", "none");
+  await expect(mark).toHaveCSS("filter", "none");
+  await expect(page.getByRole("link", { name: "Yuan Chen, home" })).toBeVisible();
+});

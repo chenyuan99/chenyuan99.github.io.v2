@@ -68,3 +68,9 @@ Case studies are prerendered at `/notes/<slug>/` with their own canonical URLs, 
 ## Contact icons
 
 The GitHub, LinkedIn, Medium and Google Scholar SVG marks in `ContactIcon.astro` are sourced from [Simple Icons 13.0.0](https://github.com/simple-icons/simple-icons/tree/13.0.0/icons) ([CC0 license](https://github.com/simple-icons/simple-icons/blob/13.0.0/LICENSE.md)). Brand marks identify the linked services and are not an indication of endorsement. The email envelope is a generic icon. All SVGs are local, use theme colors, and are decorative within accessible labeled controls.
+
+## Personal identity
+
+The CY monogram and stacked YUAN / CHEN wordmark derive from the owner-supplied artwork (visually traced as transparent SVGs). The monogram is used for navigation and the theme-aware favicon; the wordmark is the hero identity. Screen readers and print retain the semantic text heading. The social preview card is generated from `assets/brand/og-source.svg` at 1200 × 630 pixels, and exported to `public/og.png`.
+
+To regenerate the card after an intentional brand change: `rsvg-convert -o public/og.png assets/brand/og-source.svg`. Update the screenshot baselines only after reviewing the change.

@@ -203,7 +203,7 @@ a:focus-visible, button:focus-visible {
     --muted-foreground: #333; --primary: #111; --primary-foreground: white; --border: #ccc;
   }
   body { font-size: 10pt; background: white; color: #111; line-height: 1.35; }
-  .no-print, .skip-link, header, footer, #contact, #projects, #research, #credentials { display: none !important; }
+  .no-print, .skip-link, .site-header, footer, #contact, #projects, #notes, #research, #credentials { display: none !important; }
   .shell { width: 100%; max-width: none !important; padding: 0 !important; }
   .hero { display: block; padding: 0 0 9pt !important; }
   section { margin: 0 0 10pt !important; padding: 0 !important; border: 0 !important; }
@@ -262,4 +262,59 @@ a:focus-visible, button:focus-visible {
   .featured-project { grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); align-items: center; }
   .archive-row { grid-template-columns: minmax(0, 1fr) minmax(8rem, .4fr); gap: 1.5rem; }
   .archive-tags { text-align: right; }
+}
+
+/* Engineering notes use native links and an editorial list, with no hydration. */
+.notes-list { border-top: 1px solid var(--border); }
+.note-row { display: grid; gap: .5rem; padding-block: 1.1rem; border-bottom: 1px solid var(--border); }
+.note-meta { display: flex; flex-wrap: wrap; gap: .25rem .75rem; color: var(--muted-foreground); font-size: .75rem; }
+.note-meta time { font-family: var(--font-mono); color: var(--primary); font-weight: 500; }
+.note-title { font-size: 1.05rem; font-weight: 600; letter-spacing: -.025em; line-height: 1.45; }
+.note-title a { display: flex; min-height: 2.75rem; gap: 1rem; justify-content: space-between; align-items: center; overflow-wrap: anywhere; }
+.note-title a:hover, .note-source:hover { color: var(--primary); text-decoration: underline; }
+@media (min-width: 48rem) {
+  .note-row { grid-template-columns: minmax(8rem, 10rem) minmax(0, 1fr); gap: 1.5rem; }
+  .note-meta { flex-direction: column; padding-top: .65rem; }
+}
+@media (max-width: 360px) { :root { --header-offset: 11rem; } }
+.note-article { max-width: 45rem; margin-inline: auto; padding-block: clamp(2.5rem, 7vw, 5rem); }
+.note-article-header { border-bottom: 1px solid var(--border); padding-bottom: 1.75rem; }
+.note-article-header h1 { margin-top: .8rem; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.12; font-weight: 650; letter-spacing: -.045em; overflow-wrap: anywhere; }
+.note-article-summary { margin-top: 1rem; color: var(--muted-foreground); font-size: clamp(1rem, 2vw, 1.2rem); line-height: 1.7; }
+.note-article-section { margin-top: 2rem; }
+.note-article-section h2 { font-size: 1.35rem; font-weight: 600; letter-spacing: -.03em; }
+.note-article-section p { margin-top: .75rem; line-height: 1.8; }
+.note-source { display: inline-flex; gap: .5rem; align-items: center; min-height: 2.75rem; color: var(--primary); font-size: .9rem; overflow-wrap: anywhere; }
+@media print { .note-article-header { display: block; } .note-article { padding-block: 0; } }
+
+/* Contact marks are local SVGs: crisp at any size, adaptive to both themes. */
+.contact-icons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(.5rem, 2vw, 1.25rem);
+  margin-top: 1.5rem;
+}
+.contact-icon-link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 0;
+  border-radius: .625rem;
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: color .18s ease, background-color .18s ease;
+}
+.contact-icon-link:hover, .contact-icon-link:focus-visible {
+  color: var(--primary);
+  background: var(--muted);
+}
+.contact-logo {
+  display: block;
+  flex-shrink: 0;
+  width: clamp(1.5rem, 4vw, 1.875rem);
+  height: clamp(1.5rem, 4vw, 1.875rem);
 }

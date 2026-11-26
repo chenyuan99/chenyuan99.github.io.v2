@@ -3,21 +3,42 @@ import "@fontsource-variable/geist/wght.css";
 import "@fontsource-variable/geist-mono/wght.css";
 import "@/styles/global.css";
 import { resume } from "@/data/resume";
-const canonical = new URL("/", Astro.site);
-const description = resume.summary;
-const structured = { "@context":"https://schema.org", "@type":"Person", name:resume.name, jobTitle:resume.title, url:canonical.href, worksFor:{"@type":"Organization",name:resume.experience[0].company}, alumniOf:resume.education.map(e=>({"@type":"CollegeOrUniversity",name:e.school})), sameAs:resume.socials.map(s=>s.url) };
+interface Props {
+  title?: string;
+  description?: string;
+  path?: string;
+  article?: { datePublished: string; topics: readonly string[]; citations: readonly string[] };
+}
+const { title, description = resume.summary, path = "/", article } = Astro.props;
+const canonical = new URL(path, Astro.site);
+const home = new URL("/", Astro.site).href;
+const pageTitle = title ? title + " — " + resume.name : resume.name + " — " + resume.title;
+const person = { "@context":"https://schema.org", "@type":"Person", name:resume.name, jobTitle:resume.title, url:home, worksFor:{"@type":"Organization",name:resume.experience[0].company}, alumniOf:resume.education.map(e=>({"@type":"CollegeOrUniversity",name:e.school})), sameAs:resume.socials.map(s=>s.url) };
+const structured = article && title ? {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  datePublished: article.datePublished,
+  url: canonical.href,
+  mainEntityOfPage: canonical.href,
+  author: { "@type": "Person", name: resume.name, url: home },
+  keywords: article.topics,
+  citation: article.citations,
+} : person;
 ---
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{resume.name} — {resume.title}</title>
+  <title>{pageTitle}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content={resume.name + " — " + resume.title} />
+  <meta property="og:type" content={article ? "article" : "website"} />
+  {article && <meta property="article:published_time" content={article.datePublished + "T00:00:00Z"} />}
+  <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={description} />
   <meta property="og:url" content={canonical} />
   <meta property="og:image" content={new URL("/og.png", canonical)} />

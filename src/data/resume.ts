@@ -27,7 +27,7 @@ export const resume = {
     },
     {
       "label": "Google Scholar",
-      "url": "https://scholar.google.com/citations?user=PS_CX0AAAAAJ"
+      "url": "https://scholar.google.com/citations?user=aJNZ1EYAAAAJ&hl=en"
     }
   ],
   "experience": [
